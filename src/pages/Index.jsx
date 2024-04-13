@@ -31,11 +31,10 @@ const Index = () => {
 
     reader.onload = (e) => {
       const csv = e.target.result;
-      const results = parseCsv(csv);
-      const filteredData = results.filter((row) => row.type === "ai_update");
-      setData(filteredData);
+      const parsedData = parseCsv(csv);
+      setData(parsedData);
 
-      const uniqueProjectIds = [...new Set(filteredData.map((row) => row.__path__.split("/")[1]))];
+      const uniqueProjectIds = [...new Set(parsedData.map((row) => row.__path__.split("/")[1]))];
       setProjectIds(uniqueProjectIds);
     };
 
