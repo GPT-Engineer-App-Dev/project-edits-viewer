@@ -72,7 +72,19 @@ const Index = () => {
                 .map((row, index) => (
                   <ListItem key={index}>
                     <VStack align="start">
-                      <Code whiteSpace="pre-wrap">{JSON.stringify(JSON.parse(row["tags.output"]), null, 2)}</Code>
+                      {row["tags.output"] ? (
+                        <Code whiteSpace="pre-wrap">
+                          {(() => {
+                            try {
+                              return JSON.stringify(JSON.parse(row["tags.output"]), null, 2);
+                            } catch (error) {
+                              return "Error parsing JSON: " + error.message;
+                            }
+                          })()}
+                        </Code>
+                      ) : (
+                        <Text>No output data available</Text>
+                      )}
                       {row.status !== "failed" && (
                         <HStack>
                           <Text fontWeight="bold">Commit SHA:</Text>
