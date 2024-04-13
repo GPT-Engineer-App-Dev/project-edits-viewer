@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, FormControl, FormLabel, Input, Select, List, ListItem, Text, Code, VStack, HStack } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input, Select, List, ListItem, Text, Code, VStack, HStack, Link } from "@chakra-ui/react";
 
 const Index = () => {
   const [data, setData] = useState([]);
@@ -101,10 +101,15 @@ const Index = () => {
                         )}
                       </VStack>
                       {row.status !== "failed" && (
-                        <HStack>
-                          <Text fontWeight="bold">Commit SHA:</Text>
-                          <Text>{row.commit_sha}</Text>
-                        </HStack>
+                        <>
+                          <HStack>
+                            <Text fontWeight="bold">Commit SHA:</Text>
+                            <Text>{row.commit_sha}</Text>
+                          </HStack>
+                          <Link href={`https://github.com/search?q=commit%3A+${row.commit_sha}&type=commits`} isExternal color="blue.500">
+                            View Commit on GitHub
+                          </Link>
+                        </>
                       )}
                     </VStack>
                   </ListItem>
