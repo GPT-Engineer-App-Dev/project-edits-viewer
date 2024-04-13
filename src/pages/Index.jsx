@@ -34,7 +34,16 @@ const Index = () => {
       const parsedData = parseCsv(csv);
       setData(parsedData);
 
-      const uniqueProjectIds = [...new Set(parsedData.map((row) => row.__path__.split("/")[1]))];
+      const uniqueProjectIds = [
+        ...new Set(
+          parsedData
+            .map((row) => {
+              const pathParts = row.__path__.split("/");
+              return pathParts.length > 1 ? pathParts[1] : "";
+            })
+            .filter(Boolean),
+        ),
+      ];
       setProjectIds(uniqueProjectIds);
     };
 
