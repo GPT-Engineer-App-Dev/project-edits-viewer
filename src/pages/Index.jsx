@@ -85,10 +85,14 @@ const Index = () => {
                         {row.tags && typeof row.tags === "string" ? (
                           <Code whiteSpace="pre-wrap" p={2} borderWidth={1} borderRadius="md">
                             {(() => {
+                              console.log("Attempting to parse tags:", row.tags);
+                              const trimmedTags = row.tags.trim();
                               try {
-                                return JSON.stringify(JSON.parse(row.tags), null, 2);
+                                const parsed = JSON.parse(trimmedTags);
+                                return JSON.stringify(parsed, null, 2);
                               } catch (error) {
-                                return "Invalid tags JSON: " + error.message;
+                                return `Invalid tags JSON: ${error.message}. 
+                                  Attempted to parse: ${trimmedTags}`;
                               }
                             })()}
                           </Code>
