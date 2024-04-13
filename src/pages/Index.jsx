@@ -80,20 +80,22 @@ const Index = () => {
                 .map((row, index) => (
                   <ListItem key={index}>
                     <VStack align="start">
-                      <Text fontWeight="bold">Edit ID: {row.__id__}</Text>
-                      {row.hasOwnProperty("tags.output") && typeof row["tags.output"] === "string" && row["tags.output"].trim() !== "" ? (
-                        <Code whiteSpace="pre-wrap">
-                          {(() => {
-                            try {
-                              return JSON.stringify(JSON.parse(row["tags.output"]), null, 2);
-                            } catch (error) {
-                              return "Invalid JSON: " + error.message;
-                            }
-                          })()}
-                        </Code>
-                      ) : (
-                        <Text>Output data not available or invalid</Text>
-                      )}
+                      <VStack align="start" spacing={2}>
+                        <Text fontWeight="bold">Edit ID: {row.__id__}</Text>
+                        {row.tags && typeof row.tags === "string" ? (
+                          <Code whiteSpace="pre-wrap" p={2} borderWidth={1} borderRadius="md">
+                            {(() => {
+                              try {
+                                return JSON.stringify(JSON.parse(row.tags), null, 2);
+                              } catch (error) {
+                                return "Invalid tags JSON: " + error.message;
+                              }
+                            })()}
+                          </Code>
+                        ) : (
+                          <Text>No tags data available</Text>
+                        )}
+                      </VStack>
                       {row.status !== "failed" && (
                         <HStack>
                           <Text fontWeight="bold">Commit SHA:</Text>
